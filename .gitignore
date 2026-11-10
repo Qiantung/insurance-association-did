@@ -1,0 +1,13 @@
+__pycache__/
+.venv/
+data/private/
+*.xlsx
+*.pt
+*.pth
+*.pkl
+*.joblib
+*.jpg
+*.png
+*.pdf
+*.docx
+results/local/

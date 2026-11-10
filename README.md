@@ -1,3 +1,29 @@
 # Insurance Association & Local Insurance Markets
 
-Research in progress. Synthetic demonstration only; empirical findings are not yet verified.
+**研究进行中 / Research in progress**
+
+研究问题：保险行业协会的建立，是否与地方保险市场发展有关？本仓库整理城市面板分析的方法框架，展示数据核查、双重差分、事件研究和安慰剂检验。尚未形成可对外引用的实证结论。
+
+## 当前公开内容
+
+- `research.py`：从原课程外研究脚本的分析流程整理出的统一入口；包含输入验证、城市/年份固定效应、城市聚类标准误、政策前系数联合检验、按城市置换处理状态。
+- `results/synthetic/`：本次重新运行的**完全合成**示例。虚构城市、结果变量和处理效应均由随机数生成，不是原论文数据或原研究发现。
+- `RESEARCH_STATUS.md`：原稿、分析表和脚本核查发现的问题与后续任务。
+- `tests/`：针对面板重复、处理状态变化及基本估计行为的检查。
+
+```bash
+python -m pip install -r requirements.txt
+python research.py --output results/local/demo --placebos 100
+```
+
+默认生成 40 个虚构城市 × 11 年，共 440 行数据。合成设定为统一在 2005 年实施、恒定效应 2；该设定只为验证分析管线。
+
+自备数据列：`city, year, treated, control, outcome`。`treated=1` 明确代表处理组、`0` 代表对照组。运行 `python research.py --input your_panel.csv --output results/local/private`。请先核对数据使用权限与处理状态定义。
+
+## 识别限制
+
+当前入口是**共同处理时点**的教学 TWFE 框架，不是交错处理的稳健估计器。若真实城市成立时间不同，必须重新整理首次处理年份与从未处理组，并采用适合交错处理和效应异质性的估计方法。平行趋势的统计检验不能证明识别假设成立，机制回归也不能自动识别因果机制。
+
+## 贡献与整理说明
+
+研究想法、原分析材料与代码来自作者；按作者说明，主要研究设计及计算工作由本人负责，论文写作并非本人主要分工。此次 GitHub 发布版在 AI 辅助下重构了路径、数据验证、推断和示例入口。发布版不等同于原稿的全部分析，不声称已复现原稿结果。完整论文、原始研究数据、历史估计输出均未上传。
